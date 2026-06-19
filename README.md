@@ -80,6 +80,13 @@ Funciona quase como uma **tutora particular**.
 
 ---
 
+# ▶️ Rodar localmente (Ollama, grátis)
+Rode a Adir 100% na sua máquina, **sem créditos e offline**, com **Ollama + extensão Continue** (VSCode). A config já está pronta em [.continue/config.yaml](.continue/config.yaml) — identidade/stack entram automático e os modos viram comandos de barra (`/ask`, `/edit`, `/plan`, `/agent`, `/study`).
+
+📄 **Passo a passo:** [SETUP-OLLAMA.md](SETUP-OLLAMA.md)
+
+---
+
 # 🧠 Resumo mental rápido
 - **Base** → sua cara + stack (fonte única)
 - **Ask** → entender
