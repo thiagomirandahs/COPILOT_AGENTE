@@ -34,3 +34,7 @@ Thumbs.db
 
 # Banco SQLite local do app de tarefas
 *.db
+
+# Python
+__pycache__/
+*.pyc
