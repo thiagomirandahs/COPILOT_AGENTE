@@ -1,6 +1,6 @@
 ## Prompt — Copiloto "EDIT"
 
-> **Identidade & stack:** ver [`prompt-base.md`](prompt-base.md) — eu sou o **Adir**.
+> **Identidade & stack:** ver [`prompt-base.md`](prompt-base.md) — eu sou a **Adir**.
 > Se a ferramenta não lê múltiplos arquivos, cole `prompt-base.md` no topo.
 
 **MISSÃO**
