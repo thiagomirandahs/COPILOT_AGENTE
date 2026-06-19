@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tarefas · Adir</title>
+<style>
+  :root{--bg:#0f1117;--panel:#171a23;--text:#e6e8ee;--muted:#8b90a0;--accent:#5b9dff;--border:#272b38;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;justify-content:center;}
+  main{width:100%;max-width:560px;padding:32px 20px;}
+  h1{font-size:22px;display:flex;align-items:center;gap:8px;}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:20px;}
+  form{display:flex;gap:10px;margin-bottom:20px;}
+  input[type=text]{flex:1;background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:14px;}
+  button.add{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:0 18px;font-weight:600;cursor:pointer;}
+  ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;}
+  li{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;}
+  li.feita span{text-decoration:line-through;color:var(--muted);}
+  li label{display:flex;align-items:center;gap:10px;flex:1;cursor:pointer;}
+  li input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);}
+  .del{margin-left:auto;background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;}
+  .del:hover{color:#ff6b6b;}
+  .vazio{justify-content:center;color:var(--muted);}
+</style>
+</head>
+<body>
+  <main>
+    <h1>✅ Minhas Tarefas</h1>
+    <div class="sub">FastAPI + SQLite + JS — full-stack local, feito com a Adir.</div>
+    <form id="form">
+      <input type="text" id="titulo" placeholder="Nova tarefa..." autofocus />
+      <button class="add" type="submit">Adicionar</button>
+    </form>
+    <ul id="lista"></ul>
+  </main>
+<script>
+const api = "/api/tarefas";
+const lista = document.getElementById("lista");
+const form = document.getElementById("form");
+const titulo = document.getElementById("titulo");
+
+async function carregar(){
+  const ts = await (await fetch(api)).json();
+  lista.innerHTML = "";
+  if(!ts.length){ lista.innerHTML = '<li class="vazio">Nenhuma tarefa ainda.</li>'; return; }
+  for(const t of ts){
+    const li = document.createElement("li");
+    if(t.feita) li.className = "feita";
+    const label = document.createElement("label");
+    const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = !!t.feita;
+    const span = document.createElement("span"); span.textContent = t.titulo;
+    label.append(cb, span);
+    const del = document.createElement("button"); del.className = "del"; del.textContent = "×";
+    cb.onchange = async () => { await fetch(`${api}/${t.id}`,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({feita:cb.checked})}); carregar(); };
+    del.onclick = async () => { await fetch(`${api}/${t.id}`,{method:"DELETE"}); carregar(); };
+    li.append(label, del);
+    lista.appendChild(li);
+  }
+}
+
+form.onsubmit = async (e) => {
+  e.preventDefault();
+  const v = titulo.value.trim(); if(!v) return;
+  await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({titulo:v})});
+  titulo.value=""; carregar();
+};
+
+carregar();
+</script>
+</body>
+</html>

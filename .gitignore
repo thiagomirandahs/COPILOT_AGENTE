@@ -31,3 +31,6 @@ Thumbs.db
 
 # Scaffold React local (fora do escopo deste repo de prompts)
 /React/
+
+# Banco SQLite local do app de tarefas
+*.db
