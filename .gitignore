@@ -28,3 +28,6 @@ pnpm-debug.log*
 Thumbs.db
 .idea/
 .vscode/
+
+# Scaffold React local (fora do escopo deste repo de prompts)
+/React/
